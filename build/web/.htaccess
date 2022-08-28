@@ -1,8 +1,6 @@
-DirectoryIndex index.html
-
-RewriteEngine On
-
-# Front-controller (exclude static resources)
-RewriteRule ^index\.html$ - [L]
-RewriteCond %{REQUEST_URI} !^/(assets|css|img|js|modules|partials|vendor)/
-RewriteRule . index.html [L]
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
