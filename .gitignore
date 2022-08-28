@@ -11,7 +11,7 @@ local.properties
 
 !build
 
-/*/build/
+#/*/build/
 # User-specific configurations
 .idea/libraries/
 .idea/workspace.xml
