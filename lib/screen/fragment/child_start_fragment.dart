@@ -1032,40 +1032,19 @@ class _ChildStartFragmentState extends State<ChildStartFragment> {
                         child:Padding(
                             padding: EdgeInsets.all(16.0),
                             child: new Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children:[
-                        DataTable(
-                        columns: [
-                        DataColumn(label: Text('RollNo')),
-                        DataColumn(label: Text('Name')),
-                        DataColumn(label: Text('Class')),
-                        ],
-                        rows: [
-                        DataRow(cells: [
-                        DataCell(Text('1')),
-                        DataCell(Text('Arya')),
-                        DataCell(Text('6')),
-                        ]),
-                        DataRow(cells: [
-                        DataCell(Text('12')),
-                        DataCell(Text('John')),
-                        DataCell(Text('9')),
-                        ])
-                        ],
-                        ),
-
-
-                        ExpansionPanelList(
-                        animationDuration: Duration(milliseconds: 300),
-                        expansionCallback: (int index, bool isExpanded) {
-                        setState((){
-                        o[index]=!isExpanded;
-                        });
-                        },
-                        children:[..._ExpansionPanel(panels)]
-                        )
-                        ]
-                        )
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children:[
+                                    ExpansionPanelList(
+                                        animationDuration: Duration(milliseconds: 300),
+                                        expansionCallback: (int index, bool isExpanded) {
+                                            setState((){
+                                                o[index]=!isExpanded;
+                                            });
+                                        },
+                                        children:[..._ExpansionPanel(panels)]
+                                    )
+                                ]
+                            )
                         ),
                     )),
                     Padding(padding: EdgeInsets.all(10.0),child:Row(

@@ -4,15 +4,18 @@ import 'package:registration_login/screen/login_screen.dart';
 import 'package:registration_login/screen/registration_screen.dart';
 import 'package:registration_login/screen/splash_screen.dart';
 import 'package:registration_login/screen/background_geolocation_screen.dart';
+import 'package:registration_login/screen/children_screen.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter/foundation.dart';
 
 var routes = <String, WidgetBuilder>{
     "/RegistrationScreen": (BuildContext context) => RegistrationScreen(),
     "/LoginScreen": (BuildContext context) => LoginScreen(),
     "/HomeScreen": (BuildContext context) => HomeScreen(),
     "/BackgroundGeolocation": (BuildContext context) => MyApp(),
+    
 };
 //Or go_router
 void main() async {
@@ -33,6 +36,14 @@ void main() async {
             GoRoute(
                 path: '/BackgroundGeolocation',
                 builder: (BuildContext context, GoRouterState state)=>MyApp(),
+            ),
+            GoRoute(
+                path: '/admin/pma/children',
+                builder: (BuildContext context, GoRouterState state){
+                    String? path=state.path;
+                    debugPrint('state.path: $path');
+                    return ChildrenScreen();
+                }
             ),
         ],
     );
