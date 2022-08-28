@@ -33,5 +33,5 @@ linux/
 macos/
 
 build/*
-!build/www/
+!build/web/
 .flutter-plugins
