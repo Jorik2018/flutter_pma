@@ -14,5 +14,5 @@ jobs:
         server: ftp.grupoipeys.com
         username: antoniopinedo2018@grupoipeys.com
         password: ${{secrets.PASS}}
-        local-dir: ./www/
+        local-dir: ./build/www/
         server-dir: ./pma/
