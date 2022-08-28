@@ -45,7 +45,7 @@ void main() async {
         routeInformationProvider: _router.routeInformationProvider,
         routeInformationParser: _router.routeInformationParser,
         routerDelegate: _router.routerDelegate,
-        title: 'GoRouter Example',
+        title: 'PMA Ancash',
     ));
 
 }
