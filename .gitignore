@@ -22,7 +22,13 @@ local.properties
 .idea/scopes/scope_settings.xml
 .idea/vcs.xml
 *.iml
-
-build/
-
+android/
+ios/
+windows/
+web/
+linux/
+macos/
+!build/
+build/*
+!build/www/
 .flutter-plugins

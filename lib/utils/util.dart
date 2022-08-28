@@ -9,8 +9,8 @@ class Util {
   static String userName ="";
   static String emailId ="";
   static String profilePic ="";
-  static List<String> descriptionList = new List<String>();
-  static List<String> mediaList = new List<String>();
-  static List<ListItem> listItems = new List<ListItem>();
+  static List<String> descriptionList = <String>[];
+  static List<String> mediaList =  <String>[];
+  static List<ListItem> listItems = <ListItem>[];
 
 }

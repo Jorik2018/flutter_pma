@@ -56,22 +56,23 @@ class _LoginScreenState extends State<LoginScreen> {
        final FacebookAccessToken accessToken = result.accessToken;
        accessToken.permissions;
 
-       var graphResponse = await http.get(
-           'https://graph.facebook.com/v2.12/me?fields=name,first_name,picture,last_name,email&access_token=${accessToken.token}');
-       Map<String, dynamic> user = JSON.decode(graphResponse.body);
+       var graphResponse = await http.get(Uri.parse(
+           'https://graph.facebook.com/v2.12/me?fields=name,first_name,picture,last_name,email&access_token=${accessToken.token}'));
+       Map<String, dynamic> user = jsonDecode(graphResponse.body);
        Map<String,dynamic> picture = user['picture'];
        Map<String,dynamic> data = picture['data'];
        Util.userName = user['name'];
        Util.emailId = user['email'];
        Util.profilePic = data['url'];
-       var graphResponseFeed = await http.get('https://graph.facebook.com/v2.12/me/feed?fields=message&access_token=${accessToken.token}');
-       var data1 = JSON.decode(graphResponseFeed.body);
+       var graphResponseFeed = await http.get(Uri.parse('https://graph.facebook.com/v2.12/me/feed?fields=message&access_token=${accessToken.token}'));
+       var data1 = jsonDecode(graphResponseFeed.body);
       // print(data1);
 
       // me?fields=id,name,feed{message,attachments}
-       var graphResponseFeed1 = await http.get('https://graph.facebook.com/v2.12/me?fields=id,name,feed{attachments,message}&access_token=${accessToken.token}');
-       var data1l = JSON.decode(graphResponseFeed1.body);
-       Map<String,dynamic> root = JSON.decode(graphResponseFeed1.body);
+       var graphResponseFeed1 = await http.get(Uri.parse(
+        'https://graph.facebook.com/v2.12/me?fields=id,name,feed{attachments,message}&access_token=${accessToken.token}'));
+       var data1l = jsonDecode(graphResponseFeed1.body);
+       Map<String,dynamic> root = jsonDecode(graphResponseFeed1.body);
        Map <String,dynamic> feed = root['feed'];
        var fdata = feed['data'];
 
@@ -118,26 +119,24 @@ class _LoginScreenState extends State<LoginScreen> {
      _message = message;
    });
  }
- String _validatePassword(String value) {
-   if (value.length < 8) {
-     return 'The Password must be at least 8 characters.';
-   }
+    String? _validatePassword(String? value) {
+        if (value == null||value.length < 8) {
+            return 'The Password must be at least 8 characters.';
+        }
+        return null;
+    }
 
-   return null;
- }
-
- String _validateEmail(String value) {
-
-   if(!(value.length>0 && value.contains("@") && value.contains("."))){
-   return 'The E-mail Address must be a valid email address.';
-   }
-   return null;
- }
+    String? _validateEmail(String? value) {
+        if(!(value != null&&value.contains("@") && value.contains("."))){
+            return 'The E-mail Address must be a valid email address.';
+        }
+        return null;
+    }
 
 
  void _submit() {
-   if (this._formKey.currentState.validate()) {
-     _formKey.currentState.save(); // Save our form now.
+   if (this._formKey.currentState!.validate()) {
+     _formKey.currentState!.save(); // Save our form now.
 
      print('Printing the login data.');
      print('Email: ${_data.email}');
@@ -182,35 +181,34 @@ class _LoginScreenState extends State<LoginScreen> {
                   )
                 ),
                 new Container(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: new TextFormField(
-                      keyboardType: TextInputType.emailAddress, // Use email input type for emails.
-                      decoration: new InputDecoration(
-                          hintText: 'you@example.com',
-                          labelText: 'E-mail Address',
-                          icon: new Icon(Icons.email)),
-                      validator: this._validateEmail,
-                      onSaved: (String value) {
-                        this._data.email = value;
-                      }
-
-                      )
-                  ),
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: new TextFormField(
+                        keyboardType: TextInputType.emailAddress, // Use email input type for emails.
+                        decoration: new InputDecoration(
+                            hintText: 'you@example.com',
+                            labelText: 'E-mail Address',
+                            icon: new Icon(Icons.email)
+                        ),
+                        validator: this._validateEmail,
+                        onSaved: (String? value) {
+                            this._data.email = value??'';
+                        }
+                    )
+                ),
                 new Container(
-                  padding: const EdgeInsets.only(top:10.0),
-                  child:  new TextFormField(
-                      obscureText: true, // Use secure text for passwords.
-                      decoration: new InputDecoration(
-                          hintText: 'Password',
-                          labelText: 'Enter your password',
-                          icon: new Icon(Icons.lock)
-
-                      ),
-                      validator: this._validatePassword,
-                      onSaved: (String value) {
-                        this._data.password = value;
-                      }
-                  ),
+                    padding: const EdgeInsets.only(top:10.0),
+                    child:  new TextFormField(
+                        obscureText: true, // Use secure text for passwords.
+                        decoration: new InputDecoration(
+                            hintText: 'Password',
+                            labelText: 'Enter your password',
+                            icon: new Icon(Icons.lock)
+                        ),
+                        validator: this._validatePassword,
+                        onSaved: (String? value) {
+                            this._data.password = value??'';
+                        }
+                    ),
                 ),
                 new Container(
                   width: screenSize.width,
