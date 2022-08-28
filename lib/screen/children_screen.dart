@@ -20,8 +20,7 @@ class _ChildrenScreenState extends State<ChildrenScreen> {
         appBar: AppBar(
           title: const Text('Niños'),
         ),
-        body: Center(
-          child: DataTable(
+        body: DataTable(
               columns: [
                   DataColumn(label: Text('RollNo')),
                   DataColumn(label: Text('Name')),
@@ -35,7 +34,6 @@ class _ChildrenScreenState extends State<ChildrenScreen> {
                   ])
               ],
           ),
-        ),
       ),
     );
   }
