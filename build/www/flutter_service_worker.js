@@ -1,7 +1,7 @@
 'use strict';
 const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
-const CACHE_NAME = 'flutter-app-cache';
+const CACHE_NAME = 'flutter-app-cache-1';
 const RESOURCES = {
   "assets/AssetManifest.json": "5d78a877d5aecf0f4447732d6a5ce148",
 "assets/assets/facebook.png": "2ff42e40ae850012c460ea062fbc5b57",
