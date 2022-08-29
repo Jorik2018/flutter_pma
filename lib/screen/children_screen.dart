@@ -26,6 +26,14 @@ class _ChildrenScreenState extends State<ChildrenScreen> {
         ),
         body: DataTable2(
           columnSpacing: 12,
+          
+      headingTextStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white
+                        ),
+      headingRowColor: MaterialStateProperty.resolveWith(
+                        (states) => Colors.black
+                      ),
           horizontalMargin: 12,
           minWidth: 600,
           columns: [
