@@ -6,11 +6,13 @@ import 'package:geolocator/geolocator.dart';
 import 'dart:convert';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+import 'package:go_router/go_router.dart';
 //https://www.kindacode.com/article/flutter-hive-database/
 
 class ChildStartFragment extends StatefulWidget {
 
-Function? navigateTo;
+    Function? navigateTo;
 
     ChildStartFragment({this.navigateTo});
 
@@ -353,7 +355,7 @@ class _ChildStartFragmentState extends State<ChildStartFragment> {
                   (value){},
                   textAlign:TextAlign.center,
                   readOnly:true,
-                  onTap:()=>widget.navigateTo!(5,options:o)
+                  onTap:(){context.push('/map/'+o['lat'].toString()+'/'+o['lon'].toString());}//widget.navigateTo!(5,options:o)
                 ),
                 Row(
                   mainAxisAlignment:MainAxisAlignment.end,
@@ -1025,6 +1027,10 @@ class _ChildStartFragmentState extends State<ChildStartFragment> {
         ];
 
         return new Scaffold(
+          appBar: new AppBar(
+                title: new Text('Iniciar Registro de Niño'),
+                elevation: defaultTargetPlatform== TargetPlatform.android?5.0:0.0,
+            ),
             body: new Form(
                 key: _formKey,
                 child:Column(children:[
@@ -1055,9 +1061,37 @@ class _ChildStartFragmentState extends State<ChildStartFragment> {
                                     if (_formKey.currentState!.validate()) {
                                         _formKey.currentState!.save();
                                     }
+                                         Widget cancelButton = TextButton(
+    child: Text("Cancel"),
+    onPressed:  () {},
+  );
+  Widget continueButton = TextButton(
+    child: Text("Continue"),
+    onPressed:  () {},
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("AlertDialog"),
+    content: Text("Would you like to continue learning how to use Flutter alerts?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+  
                                     setState(() {
                                         //debugPrint(_formKey);
                                         debugPrint(json.encode(o));
+
                                         //_futureAlbum = createAlbum(_controller.text);
                                     });
                                 },

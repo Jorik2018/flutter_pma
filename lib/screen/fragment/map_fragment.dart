@@ -20,6 +20,10 @@ class _MapFragmentState extends State<MapFragment> {
       double lat=widget.options!['lat']??0;
       double lon=widget.options!['lon']??0;
         return new Scaffold(
+           appBar: new AppBar(
+                title: new Text('Localizacion de Vivenda de Niño'),
+               // elevation: defaultTargetPlatform== TargetPlatform.android?5.0:0.0,
+            ),
             body:Column(
                 children: [
                     Flexible(

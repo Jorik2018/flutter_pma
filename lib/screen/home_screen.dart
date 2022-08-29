@@ -6,8 +6,10 @@ import 'package:registration_login/screen/fragment/contact_us_fragment.dart';
 import 'package:registration_login/screen/fragment/home_fragment.dart';
 import 'package:registration_login/screen/fragment/setting_fragment.dart';
 import 'package:registration_login/screen/fragment/child_start_fragment.dart';
+import 'package:registration_login/screen/fragment/children_screen.dart';
 import 'package:registration_login/screen/fragment/map_fragment.dart';
 import 'package:registration_login/utils/util.dart';
+import 'package:go_router/go_router.dart';
 
 class DrawerItem {
     String title;
@@ -23,6 +25,11 @@ class HomeScreen extends StatefulWidget {
         new DrawerItem("Contact us", Icons.contacts),
         new DrawerItem("Children", Icons.people)
     ];
+
+  String? path;
+
+  HomeScreen({this.path});
+
     @override
     _HomeScreenState createState() => new _HomeScreenState();
 }
@@ -30,9 +37,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
     int _selectedIndex = 0;
+    List<Widget> Function()? addActions;
 
     @override
     Widget build(BuildContext context) {
+
+        if(widget.path=='children')_selectedIndex=4;
+
         var drawerOptions = <Widget>[];
         for (var i = 0; i < widget.drawerItems.length; i++) {
             var d = widget.drawerItems[i];
@@ -66,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
             appBar: new AppBar(
                 title: new Text(_selectedIndex<widget.drawerItems.length?widget.drawerItems[_selectedIndex].title:'Not Found!'),
                 elevation: defaultTargetPlatform== TargetPlatform.android?5.0:0.0,
+                actions:actions
             ),
             drawer: new Drawer(
                 child: new ListView(
@@ -92,9 +104,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                 ),
             ),
-            body: _setDrawerItemWidget(_selectedIndex)
+            body: _setDrawerItemWidget(_selectedIndex),
+            
         );
     }
+
+    List<Widget> actions=[];
 
     _setDrawerItemWidget(int pos) {
         switch (pos) {
@@ -107,9 +122,13 @@ class _HomeScreenState extends State<HomeScreen> {
             case 3:
                 return new ContactUsFragment();
             case 4:
-                return new ChildStartFragment(
-                  navigateTo:_onSelectItem
-                );
+                return new ChildrenScreen(buildAction:_buildAction);
+                //setState(() {
+                  //getActions=childrenScreen.getActions();
+                //});
+                  //return new ChildStartFragment(
+                 // navigateTo:_onSelectItem
+                //);
             case 5:
                 return new MapFragment(options:options);
             default:
@@ -117,11 +136,23 @@ class _HomeScreenState extends State<HomeScreen> {
         }
     }
 
-Map? options;
+    Map? options;
+
+    _buildAction({List<Widget>? actions}){
+      
+      setState(() {
+        debugPrint('_buildAction in home');
+        this.actions=actions!=null?actions:[];
+      });
+    }
 
     _onSelectItem(int index,{bool pop:false,Map? options}) {
+      if(index==4){
+        context.go('/children');
+        return;
+      }
       this.options=options;
-      debugPrint('index: $index');
+      //debugPrint('index: $index');
       setState(() => _selectedIndex = index);
       if(pop)
       Navigator.of(context).pop(); // close the drawer
