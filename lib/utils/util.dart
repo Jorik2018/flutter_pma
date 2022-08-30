@@ -9,7 +9,7 @@ class Util {
   static const String skip = "SKIP";
   static const String next = "NEXT";
   static const String gotIt = "GOT IT";
-  static const String remoteHost = "https://www.regionancash.gob.pe/x";
+  static const String remoteHost = "https://grupoipeys.com/x";
 
   static String userName ="";
   static String emailId ="";
