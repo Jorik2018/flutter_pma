@@ -7,6 +7,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:go_router/go_router.dart';
+import 'package:registration_login/utils/util.dart';
 //https://blog.logrocket.com/flutter-datatable-widget-guide-displaying-data/
 
 class ChildrenScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _ChildrenScreenState extends State<ChildrenScreen> {
   void initState() {
       _selected = List<bool>.generate(0, (int index) => false);
       super.initState();
-      http.get(Uri.parse('http://web.regionancash.gob.pe/admin/directory/api/people/0/10')).then((response){
+      http.get(Uri.parse(Util.remoteHost+'/x/admin/directory/api/people/0/50')).then((response){
           List data=jsonDecode(response.body)['data'];
           setState(() {
               _data=data.cast<Map>();

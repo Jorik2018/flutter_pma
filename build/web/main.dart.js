@@ -83388,7 +83388,7 @@ ah(){var s,r=J.B1(0,t.y)
 for(s=0;!1;++s)r[s]=!1
 this.e=r
 this.aD()
-A.aSG(A.e9("http://web.regionancash.gob.pe/admin/directory/api/people/0/10")).bH(0,new A.ajZ(this),t.P)},
+A.aSG(A.e9("https://www.regionancash.gob.pe/x/x/admin/directory/api/people/0/50")).bH(0,new A.ajZ(this),t.P)},
 UO(){var s,r=null,q=this.e
 q=q.length>0&&B.b.m1(q,new A.ajU())
 s=t.p

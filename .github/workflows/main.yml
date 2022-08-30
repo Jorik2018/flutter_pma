@@ -15,4 +15,4 @@ jobs:
         username: antoniopinedo2018@grupoipeys.com
         password: ${{secrets.PASS}}
         local-dir: ./build/web/
-        server-dir: ./pma/
+        server-dir: ./admin/pma/
