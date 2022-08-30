@@ -27,7 +27,7 @@ class _ChildrenScreenState extends State<ChildrenScreen> {
   void initState() {
       _selected = List<bool>.generate(0, (int index) => false);
       super.initState();
-      http.get(Uri.parse(Util.remoteHost+'/x/admin/directory/api/people/0/50')).then((response){
+      http.get(Uri.parse(Util.remoteHost+'/admin/directory/api/people/0/50')).then((response){
           List data=jsonDecode(response.body)['data'];
           setState(() {
               _data=data.cast<Map>();
@@ -50,6 +50,26 @@ class _ChildrenScreenState extends State<ChildrenScreen> {
                   ),
               )
           ),
+          Container(
+
+margin: const EdgeInsets.all(8.0),
+
+padding: const EdgeInsets.all(8.0),
+
+decoration: BoxDecoration(
+
+shape: BoxShape.circle,
+
+color: Colors.green,
+
+boxShadow: [
+
+BoxShadow(blurRadius: 5, color: Colors.grey.shade300)
+
+]),
+
+
+child: Icon(Icons.chat)),
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
@@ -71,63 +91,56 @@ class _ChildrenScreenState extends State<ChildrenScreen> {
       ]:[];
   }
 
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-  backgroundColor: Colors.green,
-  //foregroundColor: Colors.black,
-  onPressed: () {
-    context.push('/children/create');
- 
-  },
-  child: Icon(Icons.add),
-),
-        //appBar:AppBar(
-        //      title: const Text('Niños'),
-        //      actions:getActions()
-        //),
-        body:Column(children:[ 
-            Row(children:[
-                IconButton(
-                    icon: const Icon(Icons.first_page_rounded),
-                    onPressed: () {
-                        setState(() {});
-                    },
-                ),
-                IconButton(
-                    icon: const Icon(Icons.navigate_before),
-                    onPressed: () {
-                        setState(() {});
-                    },
-                ),
-                IconButton(
-                    icon: const Icon(Icons.navigate_next),
-                    onPressed: () {
-                        setState(() {});
-                    },
-                ),
-                IconButton(
-                    icon: const Icon(Icons.last_page_outlined),
-                    tooltip: 'Increase volume by 10',
-                    onPressed: () {
-                        setState(() {});
-                    },
-                ),  
-            ]),
-            Expanded(
-                child:DataTable2(
-                    columnSpacing: 12,
-                    headingTextStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white
+    @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+            floatingActionButton: FloatingActionButton(
+                backgroundColor: Color.fromARGB(255, 2, 97, 5),
+                onPressed: () {
+                    context.push('/children/create');
+                },
+                child: Icon(Icons.add),
+            ),
+            body:Column(children:[ 
+                Row(children:[
+                    IconButton(
+                        icon: const Icon(Icons.first_page_rounded),
+                        onPressed: () {
+                            setState(() {});
+                        },
                     ),
-                    headingRowColor: MaterialStateProperty.resolveWith(
-                        (states) => Colors.black
+                    IconButton(
+                        icon: const Icon(Icons.navigate_before),
+                        onPressed: () {
+                            setState(() {});
+                        },
                     ),
-                    horizontalMargin: 12,
-                    minWidth: 600,
+                    IconButton(
+                        icon: const Icon(Icons.navigate_next),
+                        onPressed: () {
+                            setState(() {});
+                        },
+                    ),
+                    IconButton(
+                        icon: const Icon(Icons.last_page_outlined),
+                        tooltip: 'Increase volume by 10',
+                        onPressed: () {
+                            setState(() {});
+                        },
+                    ),  
+                ]),
+                Expanded(
+                    child:DataTable2(
+                        columnSpacing: 12,
+                        headingTextStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white
+                        ),
+                        headingRowColor: MaterialStateProperty.resolveWith(
+                            (states) => Colors.black
+                        ),
+                        horizontalMargin: 12,
+                        minWidth: 600,
                     columns: [
                         DataColumn2(
                           label: Text('Column A'),

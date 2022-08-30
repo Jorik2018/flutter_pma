@@ -75,6 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         return new Scaffold(
             appBar: new AppBar(
+                backgroundColor: Colors.green, 
                 title: new Text(_selectedIndex<widget.drawerItems.length?widget.drawerItems[_selectedIndex].title:'Not Found!'),
                 elevation: defaultTargetPlatform== TargetPlatform.android?5.0:0.0,
                 actions:actions
