@@ -15,9 +15,8 @@ flutter run --no-sound-null-safety
 flutter build web --base-href "/path/"
 flutter pub add <package-name>
 flutter pub remove <package-name>
- background_location: ^0.8.1
- flutter pub remove background_location
-
+background_location: ^0.8.1
+flutter pub remove background_location
 
 bundle exec fastlane build
 
