@@ -7,7 +7,6 @@ Step 2) Register application on facebook developer console https://developers.fa
 
 ![screenshot_1527760412](https://user-images.githubusercontent.com/3602601/42028848-29e1e348-7aeb-11e8-9f69-e252458e17b4.png)
 
-
 flutter run --no-sound-null-safety
 flutter create .
 flutter run
