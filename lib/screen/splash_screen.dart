@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:registration_login/utils/navigation_router.dart';
-import 'package:registration_login/utils/util.dart';
+import 'package:flutter_pma/utils/navigation_router.dart';
+import 'package:flutter_pma/utils/util.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

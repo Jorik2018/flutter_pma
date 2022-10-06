@@ -1,0 +1,1 @@
+cls & cd android & gradlew build & cd .. & start build\\app\\outputs\\apk\\release 

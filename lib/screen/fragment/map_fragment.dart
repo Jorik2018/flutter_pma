@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:registration_login/screen/fragment/zoombuttons_plugin_option.dart';
+import 'package:flutter_pma/screen/fragment/zoombuttons_plugin_option.dart';
 
 class MapFragment extends StatefulWidget {
 

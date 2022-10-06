@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:registration_login/utils/navigation_router.dart';
+import 'package:flutter_pma/utils/navigation_router.dart';
 
 
 class RegistrationScreen extends StatefulWidget {
@@ -87,15 +87,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       height:50.0,
                       width: 210.0,
                       margin: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 40.0),
-                      child: new RaisedButton(
+                      child: new ElevatedButton(
                         child: new Text(
                           'Register',
                           style: new TextStyle(
                               color: Colors.white
                           ),
                         ),
-                        onPressed: () => _performLogin(),
-                        color: Colors.deepPurple,
+                        onPressed: () => _performLogin()
                       ),
 
                     ),

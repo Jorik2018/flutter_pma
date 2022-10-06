@@ -1,15 +1,17 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:registration_login/screen/fragment/about_us_fragment.dart';
-import 'package:registration_login/screen/fragment/contact_us_fragment.dart';
-import 'package:registration_login/screen/fragment/home_fragment.dart';
-import 'package:registration_login/screen/fragment/setting_fragment.dart';
-import 'package:registration_login/screen/fragment/child_start_fragment.dart';
-import 'package:registration_login/screen/fragment/children_screen.dart';
-import 'package:registration_login/screen/fragment/map_fragment.dart';
-import 'package:registration_login/utils/util.dart';
+import 'package:flutter_pma/screen/fragment/about_us_fragment.dart';
+import 'package:flutter_pma/screen/fragment/contact_us_fragment.dart';
+import 'package:flutter_pma/screen/fragment/home_fragment.dart';
+import 'package:flutter_pma/screen/fragment/setting_fragment.dart';
+import 'package:flutter_pma/screen/fragment/child_start_fragment.dart';
+import 'package:flutter_pma/screen/fragment/children_screen.dart';
+import 'package:flutter_pma/screen/fragment/map_fragment.dart';
+import 'package:flutter_pma/utils/util.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
 class DrawerItem {
     String title;
@@ -28,7 +30,9 @@ class HomeScreen extends StatefulWidget {
 
   String? path;
 
-  HomeScreen({this.path});
+  Store? store;
+
+  HomeScreen({this.path,this.store});
 
     @override
     _HomeScreenState createState() => new _HomeScreenState();
@@ -99,6 +103,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 // backgroundImage: new Image.network(src),
                             ),
                         ),
+                        /*StoreConnector<int, String>(
+                  converter: (store) => store.state.toString(),
+                  builder: (context, count) {
+                    return Text('$count');
+                  },
+                ),*/
                         new Column(
                             children: drawerOptions
                         )

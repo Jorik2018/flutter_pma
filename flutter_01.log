@@ -1,0 +1,109 @@
+Flutter crash report.
+Please report a bug at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter run -d chrome --web-port=19607
+
+## exception
+
+DartDevelopmentServiceException: DartDevelopmentServiceException: WebSocketChannelException: WebSocketChannelException: WebSocketException: Connection to 'http://127.0.0.1:6202/zwWssVvofOA=/ws#' was not upgraded to websocket
+
+```
+#0      DartDevelopmentServiceImpl.startService (package:dds/src/dds_impl.dart:133:7)
+<asynchronous suspension>
+#1      DartDevelopmentService.startDartDevelopmentService (package:dds/dds.dart:97:5)
+<asynchronous suspension>
+#2      DebugService.startDartDevelopmentService (package:dwds/src/services/debug_service.dart:156:12)
+<asynchronous suspension>
+#3      DevHandler._createAppDebugServices (package:dwds/src/handlers/dev_handler.dart:468:7)
+<asynchronous suspension>
+#4      DevHandler.loadAppServices (package:dwds/src/handlers/dev_handler.dart:244:27)
+<asynchronous suspension>
+#5      Dwds.debugConnection (package:dwds/dwds.dart:91:30)
+<asynchronous suspension>
+#6      WebDevFS.connect.<anonymous closure> (package:flutter_tools/src/isolated/devfs_web.dart:694:15)
+<asynchronous suspension>
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel stable, 3.3.2, on Microsoft Windows [Versi¢n 10.0.19044.2006], locale es-ES)
+    • Flutter version 3.3.2 on channel stable at E:\flutter\flutter_3.3.2\flutter
+    • Upstream repository https://github.com/flutter/flutter.git
+    • Framework revision e3c29ec00c (12 days ago), 2022-09-14 08:46:55 -0500
+    • Engine revision a4ff2c53d8
+    • Dart version 2.18.1
+    • DevTools version 2.15.0
+
+[!] Android toolchain - develop for Android devices (Android SDK version 30.0.3)
+    • Android SDK at C:\Users\pc\AppData\Local\Android\sdk
+    ✗ cmdline-tools component is missing
+      Run `path/to/sdkmanager --install "cmdline-tools;latest"`
+      See https://developer.android.com/studio/command-line for more details.
+    ✗ Android license status unknown.
+      Run `flutter doctor --android-licenses` to accept the SDK licenses.
+      See https://flutter.dev/docs/get-started/install/windows#android-setup for more details.
+
+[✓] Chrome - develop for the web
+    • Chrome at C:\Program Files\Google\Chrome\Application\chrome.exe
+
+[!] Visual Studio - develop for Windows (Visual Studio Build Tools 2019 16.11.17)
+    • Visual Studio at C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools
+    • Visual Studio Build Tools 2019 version 16.11.32630.194
+    • Windows 10 SDK version 10.0.19041.0
+    ✗ Visual Studio is missing necessary components. Please re-run the Visual Studio installer for the "Desktop development
+      with C++" workload, and include these components:
+        MSVC v142 - VS 2019 C++ x64/x86 build tools
+         - If there are multiple build tool versions available, install the latest
+        C++ CMake tools for Windows
+        Windows 10 SDK
+
+[!] Android Studio (version 3.5)
+    • Android Studio at C:\Program Files\Android\Android Studio
+    • Flutter plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/9212-flutter
+    • Dart plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/6351-dart
+    ✗ Unable to determine bundled Java version.
+    • Try updating or re-installing Android Studio.
+
+[!] Android Studio (version 4.0)
+    • Android Studio at C:\Program Files\Android\Android Studio1
+    • Flutter plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/9212-flutter
+    • Dart plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/6351-dart
+    ✗ Unable to determine bundled Java version.
+    • Try updating or re-installing Android Studio.
+
+[✓] Android Studio (version 2021.2)
+    • Android Studio at C:\Program Files\Android\Android Studio2
+    • Flutter plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/9212-flutter
+    • Dart plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/6351-dart
+    • Java version OpenJDK Runtime Environment (build 11.0.12+7-b1504.28-7817840)
+
+[✓] IntelliJ IDEA Community Edition (version 2020.3)
+    • IntelliJ at C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.3.1
+    • Flutter plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/9212-flutter
+    • Dart plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/6351-dart
+
+[✓] VS Code (version 1.71.2)
+    • VS Code at C:\Users\pc\AppData\Local\Programs\Microsoft VS Code
+    • Flutter extension version 3.48.0
+
+[✓] Connected device (3 available)
+    • Windows (desktop) • windows • windows-x64    • Microsoft Windows [Versi¢n 10.0.19044.2006]
+    • Chrome (web)      • chrome  • web-javascript • Google Chrome 105.0.5195.127
+    • Edge (web)        • edge    • web-javascript • Microsoft Edge 105.0.1343.50
+
+[✓] HTTP Host Availability
+    • All required HTTP hosts are available
+
+! Doctor found issues in 4 categories.
+```

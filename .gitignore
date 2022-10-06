@@ -9,6 +9,8 @@ local.properties
 # Gradle generated files
 .gradle/
 
+android/gradle.properties
+
 !build
 
 #/*/build/
@@ -26,6 +28,7 @@ local.properties
 .idea/vcs.xml
 *.iml
 android/
+prev/
 ios/
 windows/
 web/
