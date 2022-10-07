@@ -4,14 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:convert';
-import 'dart:collection';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_pma/utils/util.dart';
-//https://www.kindacode.com/article/flutter-hive-database/
 
 class ChildStartFragment extends StatefulWidget {
 
@@ -52,56 +49,56 @@ class _ChildStartFragmentState extends State<ChildStartFragment> {
       backgroundColor: Colors.blue,
       textStyle: const TextStyle(fontSize: 20));
   
-  final _shoppingBox = Hive.box('shopping_box');
-
   Position? _position;
 
   @override
   void initState() {
     super.initState();
-    if(widget.id!=null)
-    http.get(Uri.parse(Util.remoteHost  + '/api/minsa/children/'+widget.id!))
-        .then((response) {
-      var data = jsonDecode(response.body);
-      if(data['p5_8']!=null){
-        _getDistricts(data['p5_8']).then((result)=>{
+    if(widget.id!=null){
+      http2.get('/api/minsa/children/'+widget.id!).then((response) {
+        var data = jsonDecode(response.body);
+        if(data['p5_8']!=null){
+          _getDistricts(data['p5_8']).then((result)=>{
+            setState(() {
+              districts=(result['data'] as List).toList();
+              fb.o=data;
+            })
+          });
+        }
+        if(data['p5_7']!=null){
+          _getProvinces(data['p5_7']).then((result)=>{
+            setState(() {
+              provinces=(result['data'] as List).toList();
+              fb.o=data;
+            })
+          });
+        }else
           setState(() {
-            districts=(result['data'] as List).toList();
             fb.o=data;
-          })
-        });
-      }
-      if(data['p5_7']!=null){
-        _getProvinces(data['p5_7']).then((result)=>{
-          setState(() {
-            provinces=(result['data'] as List).toList();
-            fb.o=data;
-          })
-        });
-      }else
-        setState(() {
-          fb.o=data;
-        });
-    });
+          });
+      });
+    }else{
+      fb.o={'p5_7':'02'};
+    }
   }
 
   @override
   void dispose() {}
 
   Future _getRegions() async {
-    http.Response response =await http.get(Uri.parse(Util.remoteHost + '/admin/directory/api/region/0/0'));
+    http.Response response =await http2.get('/admin/directory/api/region/0/0',headers:{});
     var result= jsonDecode(response.body);
     return result;
   }
 
   Future _getProvinces(Object regionId) async {
-    http.Response response =await http.get(Uri.parse(Util.remoteHost + '/admin/directory/api/province/0/0?regionId='+regionId.toString()));
+    http.Response response =await http2.get('/admin/directory/api/province/0/0?regionId='+regionId.toString(),headers:{});
     var result= jsonDecode(response.body);
     return result;
   }
 
   Future _getDistricts(Object regionId) async {
-    http.Response response =await http.get(Uri.parse(Util.remoteHost + '/admin/directory/api/district/0/0?provinceId='+regionId.toString()));
+    http.Response response =await http2.get('/admin/directory/api/district/0/0?provinceId='+regionId.toString(),headers:{});
     var result= jsonDecode(response.body);
     return result;
   }
@@ -759,8 +756,7 @@ class _ChildStartFragmentState extends State<ChildStartFragment> {
                         );*/
 
                         setState(() {
-                          http.post(Uri.parse(Util.remoteHost + '/api/minsa/children'),
-                            body:json.encode(fb.toMap())).then((response){
+                          http2.post('/api/minsa/children',fb).then((response){
                               var result= json.decode(response.body);
                               if(fb.o['_id']==null){
                                 if(result['_id']!=null)

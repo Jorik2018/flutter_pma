@@ -1,13 +1,11 @@
 import 'dart:collection';
-
+import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pma/utils/list_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
-
-
-//import 'dart:html';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Util {
 
@@ -18,8 +16,7 @@ class Util {
   static const String skip = "SKIP";
   static const String next = "NEXT";
   static const String gotIt = "GOT IT";
-  static String remoteHost =
-      'http://web.regionancash.gob.pe'; //"https://grupoipeys.com/x";
+  static String API_URL = dotenv.env['API_URL']!;
 
   static String userName = "";
   static String emailId = "";
@@ -29,20 +26,56 @@ class Util {
   static List<ListItem> listItems = <ListItem>[];
 }
 
+class HTTP{
+
+  Map<String,String> headers= {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+  };
+
+  Future<http.Response> get(String url,{Map<String,String>? headers}){
+
+    return http.get(Uri.parse(Util.API_URL  + url),headers:headers!=null?headers:this.headers);
+  }
+
+  Future<http.Response> post(String url,Object body,{String? config,Map<String,String>? headers}){
+    if(body is FormBuilder){
+      body=json.encode((body as FormBuilder).toMap());
+    }else if(!(body is String)){
+      body=json.encode(body);
+    }
+    return http.post(Uri.parse(Util.API_URL  + url),body:body.toString(),headers:headers!=null?headers:this.headers);
+
+  }
+
+}
+
+HTTP http2=HTTP();
+
 class FormBuilder {
 
-  Map o={};
+  Map _o={};
 
   Map expanded={};
 
   Map controllerMap = {};
 
-  FormBuilder(this.o);
+  FormBuilder(Map o){_o=o;}
+
+  void set o(Map o0) {
+  this._o=o0;
+  expanded={};
+  controllerMap = {};
+  }
+
+    Map get o {
+return _o;
+  }
 
   Widget dropdownButton(
       List _options, String key, void Function(void Function()) setState,
       {List Function(Object)? adapter,void Function(Object?)? onChanged}) {
-        var value=o[key]??'';
+        var value=_o[key]??'';
         var v=null;
         _options.forEach((element) {
           if (adapter != null) {
@@ -55,16 +88,16 @@ class FormBuilder {
         });
     return DropdownButton(
       value: v,
-      items: _options.map((o) {
+      items: _options.map((_o) {
         if (adapter != null) {
-          List l = o is String ? ['', o] : adapter(o);
+          List l = _o is String ? ['', _o] : adapter(_o);
           return new DropdownMenuItem(value: l[0], child: new Text(l[1]));
         } else
-          return new DropdownMenuItem(value: o, child: new Text(o));
+          return new DropdownMenuItem(value: _o, child: new Text(_o));
       }).toList(),
       onChanged: (e) {
         setState(() {
-          o[key] = e;
+          _o[key] = e;
           if(onChanged!=null)onChanged(e);
         });
       }, //setter,
@@ -84,11 +117,11 @@ class FormBuilder {
       widgets.add(ListTile(
         title: Text(item),
         leading: Radio(
-            groupValue: o![key]??'',
+            groupValue: _o![key]??'',
             value: item,
             onChanged:  (e) {
               setState(() {
-                o![key] = e??'';
+                _o![key] = e??'';
               });
             },
             splashRadius: 35,
@@ -97,7 +130,7 @@ class FormBuilder {
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap),
       ));
       if (addWidget != null) {
-        //addWidget(widgets, o![key], index);
+        //addWidget(widgets, _o![key], index);
       }
       return widgets.toList();
     }).toList();
@@ -108,9 +141,9 @@ class FormBuilder {
     if (controller == null) {
       controllerMap[name] = (controller = TextEditingController());
     }
-    if(o[name]!=null){
+    if(_o[name]!=null){
       var cursorPos =controller.selection.base.offset;
-      controller.text = o[name];
+      controller.text = _o[name];
       controller.value = controller.value.copyWith(
         text: controller.text,
         selection: TextSelection(
@@ -122,7 +155,7 @@ class FormBuilder {
       controller: controller,
       onChanged: (value) {
         setState(() {
-          o[name] = value;
+          _o[name] = value;
         });
       },
       decoration: InputDecoration(
@@ -143,9 +176,9 @@ class FormBuilder {
     if (controller == null) {
       controllerMap[name] = (controller = TextEditingController());
     }
-    if(o[name]!=null){
+    if(_o[name]!=null){
       var cursorPos =controller.selection.base.offset;
-      controller.text = o[name];
+      controller.text = _o[name];
       controller.value = controller.value.copyWith(
         text: controller.text,
         selection: TextSelection(
@@ -158,7 +191,7 @@ class FormBuilder {
       controller: controller,
       onChanged: (value) {
         setState(() {
-          o[name] = value;
+          _o[name] = value;
         });
       },
       decoration: InputDecoration(
@@ -171,7 +204,7 @@ class FormBuilder {
     );
   }
 HashMap<String,Object> toMap(){
-return HashMap.from(o.map((key, value)=> 
+return HashMap.from(_o.map((key, value)=> 
                              MapEntry(key,value)
                           ));
 }
@@ -204,14 +237,14 @@ TextStyle bold20Style = TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
 
   void setO(Function setState, Object? value, String? name) {
     setState(() {
-      o[name] = value;
+      _o[name] = value;
     });
   }
 
   void Function(String)? setter(Function setState, name) {
     return (Object? value) {
       setState(() {
-        o[name] = value;
+        _o[name] = value;
       });
     };
   }
@@ -225,14 +258,14 @@ TextStyle bold20Style = TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
       var item = entry.value;
       String valueName2 = valueName + (index + 1).toString();
       List<Widget> widgets = [];
-      Object? value = o[valueName2];
+      Object? value = _o[valueName2];
       widgets.add(CheckboxListTile(
           title: Text(item),
           controlAffinity: ListTileControlAffinity.leading,
           value: value != null && value.toString() == 'true',
           onChanged: (Object? value) {
             setState(() {
-              o[valueName2] = value;
+              _o[valueName2] = value;
             });
           }));
       if (addWidget != null) {
@@ -251,7 +284,7 @@ TextStyle bold20Style = TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
     DateTime? lastDate,
   }) {
     TextEditingController dateinput = TextEditingController();
-    Object? value=o![key];
+    Object? value=_o![key];
     return TextFormField(
       controller: dateinput..text = value != null ? value.toString() : '',
       textAlign: textAlign,
@@ -261,7 +294,7 @@ TextStyle bold20Style = TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
       onTap: () async {
         DateTime? old;
         try{
-          old=DateFormat('yyyy-MM-dd').parse(o![key]);
+          old=DateFormat('yyyy-MM-dd').parse(_o![key]);
         }catch(e){
           print(e);
         }
@@ -277,7 +310,7 @@ TextStyle bold20Style = TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
         
       
         setState(() {
-          o![key] = value;
+          _o![key] = value;
         });
      
       },

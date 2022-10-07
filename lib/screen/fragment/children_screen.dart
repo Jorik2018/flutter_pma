@@ -21,21 +21,24 @@ class ChildrenScreen extends StatefulWidget {
 
 class _ChildrenScreenState extends State<ChildrenScreen> {
 
-int page=0;
-int limit=50;
+  int page=0;
+  int limit=50;
+
+  Future _getItems(page,limit) async {
+    http.Response response =await http2.get('/api/minsa/children/' + page.toString() + '/' + limit.toString());
+    return jsonDecode(response.body);
+  }
 
   @override
   void initState() {
     _selected = List<bool>.generate(0, (int index) => false);
     super.initState();
-    http.get(Uri.parse(Util.remoteHost + '/api/minsa/children/' + page.toString() + '/' + limit.toString()))
-        .then((response) {
-      List data = jsonDecode(response.body)['data'];
-      (data.cast<Map>()).forEach((e){
-        
-        print(e.runtimeType);
-      });
-      
+    reload();
+  }
+
+  reload(){
+    _getItems(page,limit).then((result) {
+      List data = result['data'];
       setState(() {
         _data = data.cast<Map>();
         _selected = List<bool>.generate(data.length, (int index) => false);
@@ -116,9 +119,7 @@ int limit=50;
           Row(children: [
             IconButton(
               icon: const Icon(Icons.first_page_rounded),
-              onPressed: () {
-                setState(() {});
-              },
+              onPressed: reload,
             ),
             IconButton(
               icon: const Icon(Icons.navigate_before),
@@ -141,10 +142,7 @@ int limit=50;
             ),
             IconButton(
               icon: const Icon(Icons.refresh),
-              onPressed: () {
-
-                setState(() {});
-              },
+              onPressed:reload,
             ),
           ]),
           Expanded(
